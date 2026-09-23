@@ -1,30 +1,41 @@
 
 import { router } from "expo-router";
 import {
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
   View,
+  Text,
+  StyleSheet,
+  Pressable,
+  ScrollView,
 } from "react-native";
 
-export default function WelcomeScreen() {
+export default function HomeScreen() {
+  const handleCreateAccount = () => {
+    console.log("Create Account button clicked");
+    router.push("/register");
+  };
+
+  const handleLogin = () => {
+    console.log("Login button clicked");
+    router.push("/login");
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
+    <ScrollView
+      contentContainerStyle={styles.scrollContainer}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.container}>
         {/* Logo */}
-        <View style={styles.logoCircle}>
+        <View style={styles.logo}>
           <Text style={styles.logoText}>S</Text>
         </View>
 
-        {/* Brand Name */}
-        <Text style={styles.brandName}>SkillMatch</Text>
+        {/* App Name */}
+        <Text style={styles.title}>SkillMatch</Text>
 
-        {/* Heading */}
+        {/* Main Heading */}
         <Text style={styles.heading}>
-          Find the right skills.
-          {"\n"}
-          Build your future.
+          Find the right skills.{"\n"}Build your future.
         </Text>
 
         {/* Description */}
@@ -35,81 +46,91 @@ export default function WelcomeScreen() {
 
         {/* Features */}
         <View style={styles.features}>
-          <View style={styles.featureItem}>
-            <Text style={styles.featureIcon}>✓</Text>
+          <View style={styles.featureRow}>
+            <View style={styles.checkCircle}>
+              <Text style={styles.checkText}>✓</Text>
+            </View>
+
             <Text style={styles.featureText}>
               Discover relevant jobs
             </Text>
           </View>
 
-          <View style={styles.featureItem}>
-            <Text style={styles.featureIcon}>✓</Text>
+          <View style={styles.featureRow}>
+            <View style={styles.checkCircle}>
+              <Text style={styles.checkText}>✓</Text>
+            </View>
+
             <Text style={styles.featureText}>
               Showcase your skills
             </Text>
           </View>
 
-          <View style={styles.featureItem}>
-            <Text style={styles.featureIcon}>✓</Text>
+          <View style={styles.featureRow}>
+            <View style={styles.checkCircle}>
+              <Text style={styles.checkText}>✓</Text>
+            </View>
+
             <Text style={styles.featureText}>
               Connect with recruiters
             </Text>
           </View>
         </View>
 
-        {/* Buttons */}
-        <View style={styles.buttons}>
-          <Pressable
-            style={({ pressed }) => [
-              styles.primaryButton,
-              pressed && styles.buttonPressed,
-            ]}
-            onPress={() => router.push("/(auth)/register")}
-          >
-            <Text style={styles.primaryButtonText}>
-              Create Account
-            </Text>
-          </Pressable>
+        {/* Create Account Button */}
+        <Pressable
+          style={({ pressed }) => [
+            styles.primaryButton,
+            pressed && styles.pressedButton,
+          ]}
+          onPress={handleCreateAccount}
+        >
+          <Text style={styles.primaryButtonText}>
+            Create Account
+          </Text>
+        </Pressable>
 
-          <Pressable
-            style={({ pressed }) => [
-              styles.secondaryButton,
-              pressed && styles.buttonPressed,
-            ]}
-            onPress={() => router.push("/(auth)/login")}
-          >
-            <Text style={styles.secondaryButtonText}>
-              Login
-            </Text>
-          </Pressable>
-        </View>
+        {/* Login Button */}
+        <Pressable
+          style={({ pressed }) => [
+            styles.secondaryButton,
+            pressed && styles.pressedButton,
+          ]}
+          onPress={handleLogin}
+        >
+          <Text style={styles.secondaryButtonText}>
+            Login
+          </Text>
+        </Pressable>
 
         {/* Footer */}
         <Text style={styles.footer}>
           Your skills. Your opportunities.
         </Text>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F8FAFC",
+  scrollContainer: {
+    flexGrow: 1,
   },
 
-  content: {
+  container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 28,
+    backgroundColor: "#F8FAFC",
+    paddingHorizontal: 24,
+    paddingVertical: 50,
+    minHeight: "100%",
   },
 
-  logoCircle: {
-    width: 88,
-    height: 88,
-    borderRadius: 44,
+  logo: {
+    width: 82,
+    height: 82,
+    borderRadius: 41,
     backgroundColor: "#2563EB",
     alignItems: "center",
     justifyContent: "center",
@@ -117,124 +138,129 @@ const styles = StyleSheet.create({
     shadowColor: "#2563EB",
     shadowOffset: {
       width: 0,
-      height: 6,
+      height: 4,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 12,
-    elevation: 8,
+    shadowRadius: 8,
+    elevation: 5,
   },
 
   logoText: {
     color: "#FFFFFF",
-    fontSize: 52,
-    fontWeight: "800",
+    fontSize: 46,
+    fontWeight: "bold",
   },
 
-  brandName: {
-    color: "#1D4ED8",
-    fontSize: 30,
-    fontWeight: "800",
-    marginBottom: 28,
+  title: {
+    color: "#2563EB",
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBottom: 30,
   },
 
   heading: {
     color: "#0F172A",
-    fontSize: 32,
-    fontWeight: "800",
-    lineHeight: 40,
+    fontSize: 28,
+    fontWeight: "bold",
     textAlign: "center",
+    lineHeight: 38,
     marginBottom: 18,
   },
 
   description: {
     color: "#64748B",
-    fontSize: 16,
-    lineHeight: 25,
+    fontSize: 15,
     textAlign: "center",
-    maxWidth: 380,
+    lineHeight: 24,
+    maxWidth: 400,
     marginBottom: 28,
   },
 
   features: {
+    alignSelf: "center",
     width: "100%",
-    maxWidth: 380,
+    maxWidth: 350,
     marginBottom: 34,
   },
 
-  featureItem: {
+  featureRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 14,
+    marginVertical: 8,
   },
 
-  featureIcon: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
+  checkCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     backgroundColor: "#DBEAFE",
-    color: "#2563EB",
-    fontSize: 16,
-    fontWeight: "800",
-    textAlign: "center",
-    lineHeight: 26,
+    alignItems: "center",
+    justifyContent: "center",
     marginRight: 12,
   },
 
-  featureText: {
-    color: "#334155",
+  checkText: {
+    color: "#2563EB",
     fontSize: 15,
-    fontWeight: "500",
+    fontWeight: "bold",
   },
 
-  buttons: {
-    width: "100%",
-    maxWidth: 380,
-    gap: 12,
+  featureText: {
+    color: "#1E293B",
+    fontSize: 15,
   },
 
   primaryButton: {
+    width: "100%",
+    maxWidth: 380,
     backgroundColor: "#2563EB",
-    borderRadius: 14,
     paddingVertical: 17,
+    borderRadius: 10,
     alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 12,
     shadowColor: "#2563EB",
     shadowOffset: {
       width: 0,
       height: 4,
     },
     shadowOpacity: 0.2,
-    shadowRadius: 8,
+    shadowRadius: 6,
     elevation: 4,
+  },
+
+  secondaryButton: {
+    width: "100%",
+    maxWidth: 380,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#2563EB",
+    paddingVertical: 16,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   primaryButtonText: {
     color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: "700",
-  },
-
-  secondaryButton: {
-    backgroundColor: "#FFFFFF",
-    borderWidth: 1.5,
-    borderColor: "#2563EB",
-    borderRadius: 14,
-    paddingVertical: 16,
-    alignItems: "center",
+    fontWeight: "bold",
   },
 
   secondaryButtonText: {
     color: "#2563EB",
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: "bold",
   },
 
-  buttonPressed: {
+  pressedButton: {
     opacity: 0.7,
+    transform: [{ scale: 0.99 }],
   },
 
   footer: {
     color: "#94A3B8",
     fontSize: 12,
-    marginTop: 28,
+    marginTop: 30,
   },
 });
